@@ -2,6 +2,7 @@ package com.gildedrose;
 
 class GildedRose {
     Item[] items;
+    boolean isAgedBrie, isConcert, isSulfuras;
 
     public GildedRose(Item[] items) {
         this.items = items;
@@ -9,6 +10,9 @@ class GildedRose {
 
     public void updateQuality() {
         for (Item item : items) {
+            isAgedBrie = item.name.equals("Aged Brie");
+            isConcert = item.name.equals("Backstage passes to a TAFKAL80ETC concert");
+            isSulfuras = item.name.equals("Sulfuras, Hand of Ragnaros");
             updateOneItem(item);
         }
     }
@@ -28,9 +32,6 @@ class GildedRose {
     }
 
     private void updateExpired(Item item) {
-        boolean isAgedBrie = item.name.equals("Aged Brie");
-        boolean isConcert = item.name.equals("Backstage passes to a TAFKAL80ETC concert");
-        boolean isSulfuras = item.name.equals("Sulfuras, Hand of Ragnaros");
 
         if (!isAgedBrie) {
             if (!isConcert) {
@@ -48,36 +49,34 @@ class GildedRose {
     }
 
     private void updateSellIn(Item item) {
-        if (!item.name.equals("Sulfuras, Hand of Ragnaros")) {
+        if (!isSulfuras) {
             item.sellIn = item.sellIn - 1;
         }
     }
 
     private void updateQuality(Item item) {
-        boolean isAgedBrie = item.name.equals("Aged Brie");
-        boolean isConcert = item.name.equals("Backstage passes to a TAFKAL80ETC concert");
-        boolean isSulfuras = item.name.equals("Sulfuras, Hand of Ragnaros");
 
-        if ( isAgedBrie || isConcert) {
+
+        if (isAgedBrie || isConcert) {
             updateCheeseOrPass(item);
         } else if (!isSulfuras && item.quality > 0) {
-                item.quality = item.quality - 1;
+            item.quality = item.quality - 1;
         }
     }
 
     private void updateCheeseOrPass(Item item) {
-        boolean isConcert = item.name.equals("Backstage passes to a TAFKAL80ETC concert");
 
         incrementQuality(item);
-        if (isConcert) {
-                if (item.sellIn < 11) {
-                    incrementQuality(item);
-                }
 
-                if (item.sellIn < 6) {
-                    incrementQuality(item);
-                }
+        if (isConcert) {
+            if (item.sellIn < 11) {
+                incrementQuality(item);
             }
+
+            if (item.sellIn < 6) {
+                incrementQuality(item);
+            }
+        }
     }
 
     private void incrementQuality(Item item) {
