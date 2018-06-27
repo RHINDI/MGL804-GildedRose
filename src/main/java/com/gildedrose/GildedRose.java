@@ -1,8 +1,14 @@
 package com.gildedrose;
 
+import com.gildedrose.categorys.Backstage;
+import com.gildedrose.categorys.Cheese;
+import com.gildedrose.categorys.Legendary;
+
 class GildedRose {
     Item[] items;
-    boolean isAgedBrie, isConcert, isSulfuras;
+    String AgedBrie = "Aged Brie";
+    String Backstage = "Backstage passes to a TAFKAL80ETC concert";
+    String Sulfuras = "Sulfuras, Hand of Ragnaros";
 
     public GildedRose(Item[] items) {
         this.items = items;
@@ -10,71 +16,24 @@ class GildedRose {
 
     public void updateQuality() {
         for (Item item : items) {
-            isAgedBrie = item.name.equals("Aged Brie");
-            isConcert = item.name.equals("Backstage passes to a TAFKAL80ETC concert");
-            isSulfuras = item.name.equals("Sulfuras, Hand of Ragnaros");
-            updateOneItem(item);
+            ItemCategory category = categorize(item);
+            category.updateOneItem(item);
         }
     }
 
-    private void updateOneItem(Item item) {
-        updateQuality(item);
-
-        updateSellIn(item);
-
-        if (hasExpired(item)) {
-            updateExpired(item);
+    private ItemCategory categorize(Item item) {
+        if (item.name.equals(Sulfuras)) {
+            return new Legendary();
         }
-    }
-
-    private boolean hasExpired(Item item) {
-        return item.sellIn < 0;
-    }
-
-    private void updateExpired(Item item) {
-        if (isAgedBrie) {
-            incrementQuality(item);
-        } else if (isConcert) {
-            item.quality = 0;
-        } else if (isSulfuras) {
-        } else {
-            decrementQuality(item);
+        if (item.name.equals(AgedBrie)) {
+            return new Cheese();
         }
+        if (item.name.equals(Backstage)) {
+            return new Backstage();
+        }
+        return new ItemCategory();
     }
 
-    private void updateQuality(Item item) {
-        if (isAgedBrie) {
-            incrementQuality(item);
-        } else if (isConcert) {
-            incrementQuality(item);
-            if (item.sellIn < 11) {
-                incrementQuality(item);
-            }
-            if (item.sellIn < 6) {
-                incrementQuality(item);
-            }
-        } else if (isSulfuras) {
-        } else {
-            decrementQuality(item);
-        }
-    }
 
-    private void updateSellIn(Item item) {
-        if (!isSulfuras) {
-            item.sellIn = item.sellIn - 1;
-        }
-    }
-
-    private void decrementQuality(Item item) {
-        if (item.quality > 0) {
-            item.quality = item.quality - 1;
-        }
-    }
-
-    private void incrementQuality(Item item) {
-        if (item.quality < 50) {
-            item.quality = item.quality + 1;
-        }
-    }
 
 }
