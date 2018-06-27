@@ -59,7 +59,6 @@ class GildedRose {
         }
     }
 
-
     private void updateSellIn(Item item) {
         if (!isSulfuras) {
             item.sellIn = item.sellIn - 1;
