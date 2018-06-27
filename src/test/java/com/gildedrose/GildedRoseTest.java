@@ -32,6 +32,18 @@ public class GildedRoseTest {
             "Backstage passes to a TAFKAL80ETC concert, 9, 50\n"+
             "Backstage passes to a TAFKAL80ETC concert, 4, 50\n"+
             "Conjured Mana Cake, 2, 5\n" +
+            "\n" +
+            "-------- day 2 --------\n" +
+            "name, sellIn, quality\n" +
+            "+5 Dexterity Vest, 8, 18\n" +
+            "Aged Brie, 0, 2\n" +
+            "Elixir of the Mongoose, 3, 5\n" +
+            "Sulfuras, Hand of Ragnaros, 0, 80\n" +
+            "Sulfuras, Hand of Ragnaros, -1, 80\n" +
+            "Backstage passes to a TAFKAL80ETC concert, 13, 22\n" +
+            "Backstage passes to a TAFKAL80ETC concert, 8, 50\n" +
+            "Backstage passes to a TAFKAL80ETC concert, 3, 50\n" +
+            "Conjured Mana Cake, 1, 4\n" +
             "\n";
 
     @Test
@@ -55,7 +67,7 @@ public class GildedRoseTest {
 
         GildedRose app = new GildedRose(items);
 
-        int days = 2;
+        int days = 3;
 
 
         for (int i = 0; i < days; i++) {
