@@ -7,10 +7,10 @@ import com.gildedrose.categorys.Conjured;
 
 class GildedRose {
     Item[] items;
-    private String AGED_BRIE = "Aged Brie";
-    private String BACK_STAGE = "Backstage passes to a TAFKAL80ETC concert";
-    private String SULFURAS = "Sulfuras, Hand of Ragnaros";
-    private String CONJURED = "Conjured";
+    private static final String AGED_BRIE = "Aged Brie";
+    private static final String BACK_STAGE = "Backstage passes to a TAFKAL80ETC concert";
+    private static final String SULFURAS = "Sulfuras, Hand of Ragnaros";
+    private static final String CONJURED = "Conjured";
 
     public GildedRose(Item[] items) {
         this.items = items;
@@ -24,21 +24,13 @@ class GildedRose {
     }
 
     private ItemCategory categorize(Item item) {
-        if (item.name.equals(SULFURAS)) {
-            return new Sulfuras();
+        switch (item.name){
+            case AGED_BRIE: return new AgedBrie();
+            case BACK_STAGE: return new Backstage();
+            case SULFURAS : return new Sulfuras();
+            case CONJURED : return new Conjured();
+            default: return new ItemCategory();
+
         }
-        if (item.name.equals(AGED_BRIE)) {
-            return new AgedBrie();
-        }
-        if (item.name.equals(BACK_STAGE)) {
-            return new Backstage();
-        }
-        if(item.name.equals(CONJURED)){
-            return new Conjured();
-        }
-        return new ItemCategory();
     }
-
-
-
 }
